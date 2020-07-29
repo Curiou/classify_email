@@ -21,6 +21,6 @@ __pycache__
 config/private.py
 test/
 
-#migrations/
-#!apps/*/*/__init__.py
+migrations/
+!migrations/__init__.py
 

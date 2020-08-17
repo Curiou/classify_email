@@ -10,11 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import datetime
 import os
+import sys
+
+import djcelery
+
 from config.private import *
+
+djcelery.setup_loader()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
+# 加载 所有 app 目录
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+# 加载 测试 extra_apps 目录
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -23,6 +35,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=uwvetsgcyqynw2a5csiwym*yi1@u&w11v8my9msg0x+%h_s$9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# debug 模式，上线时关了
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -147,7 +160,18 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = ('DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT', 'VIEW',)
 CORS_ALLOW_HEADERS = ('x-requested-with', 'content-type', 'accept', 'origin', 'authorization', 'x-csrftoken')
 STATIC_URL = '/static/'
+# 媒体文件存储路径
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "files")
+MEDIA_URL = "/files/"
+CELERY_BEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+REDIS_TOKEN_SUFFIX = "-token"
+# 上传文件大小，改成20M
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520
+
+
+
+# 静态文件存储路径
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]

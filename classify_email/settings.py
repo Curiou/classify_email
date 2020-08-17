@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from config.private import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,27 +78,27 @@ WSGI_APPLICATION = 'classify_email.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-#         'NAME': 'edu',  # 数据库名
-#         'USER': 'root',  # 用户名
-#         'PASSWORD': 'root',  # 密码
-#         'HOST': '',  # 数据库主机，默认为localhost
-#         'PORT': '',  # 数据库端口，MySQL默认为3306
-#         'OPTIONS': {
-#             'autocommit': True,
-#             "init_command": "SET foreign_key_checks = 0;",
-#             'charset': 'utf8mb4'
-#         }
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': NAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': PORT,
+        'OPTIONS': {
+            'autocommit': True,
+            "init_command": "SET foreign_key_checks = 0;",
+            'charset': 'utf8mb4'
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -134,11 +135,11 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 # 设置跨域
 
-# CORS 设置跨域域名 白名单
-CORS_ORIGIN_WHITELIST = (
-    '127.0.0.1:8080',
-    'localhost:8080',
-)
+# # CORS 设置跨域域名 白名单
+# CORS_ORIGIN_WHITELIST = (
+#     '127.0.0.1:8080',
+#     'localhost:8080',
+# )
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 # 前端需要携带cookies访问后端时,需要设置
 withCredentials = True

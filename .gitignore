@@ -12,6 +12,7 @@ gen
 *.png
 *.jpg
 my_settings.py
+public_config.py
 
 # 忽略系统默认生成的文件——单个文件夹的
 # 将具体路径和文件加进来
@@ -19,8 +20,11 @@ __pycache__
 .idea/*.*
 
 config/private.py
+config/public_config.py
 test/
 
 migrations/
 !migrations/__init__.py
 
+files/
+.DS_Store

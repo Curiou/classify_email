@@ -41,10 +41,15 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # Application definition
-
+AUTH_USER_MODEL = 'users.UserProfile'
+# 自定义用户验证
+AUTHENTICATION_BACKENDS = (
+    'users.my_backend.CustomBackend',
+)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    # ⽤户权限处理 依赖的应⽤
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -52,14 +57,17 @@ INSTALLED_APPS = [
     # 注册跨越问题的应用
     'corsheaders',
     'rest_framework',
-    'apps.users.apps.UsersConfig'
+    # 用户信息注册
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 会话⽀持中间件
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    # 认证⽀持中间件
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -90,7 +98,16 @@ WSGI_APPLICATION = 'classify_email.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+# 配置 REDIS 缓存
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": REDIS_URL,
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -112,7 +129,37 @@ DATABASES = {
         }
     }
 }
+# 配置 REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 验证是否登陆
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 返回数据校验 和 数据结构配置
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        # 自定义校验
+        'utils.jwt_auth.ClassifyEmailJsonTokenAuthentication',
+    ),
+    # rest_framework 翻页配置
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    # 版本配置
+    "DEFAULT_VERSION": "v1",
+    'VERSION_PARAM': 'version',
+    'ALLOWED_VERSIONS': ['v1'],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
+}
+
+JWT_AUTH = {
+    # 有效期设置
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.utils.jwt_response_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_ERROR_HANDLER': 'users.utils.jwt_response_payload_error_handler',
+}
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -169,12 +216,100 @@ REDIS_TOKEN_SUFFIX = "-token"
 # 上传文件大小，改成20M
 FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520
 
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+# TEST_URL = "http://test.hotnest.net"
+# PRO_URL = "http://hotnest.net"
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 26214400
 
-# 静态文件存储路径
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+# # todo 静态文件存储路径 ,在写完log日志配置后报错，没有查到原因
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
 
 # 定义上传文件夹的路径
 UPLOAD_ROOT = os.path.join(BASE_DIR, 'static/upload')
+# 邮件 发送配置
+EMAIL_HOST = "smtp.mxhichina.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "duxiansh300@qq.com"
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+# EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
+EMAIL_FROM = "XianSheng Du 300 <duxiansh300@qq.com>"
+DEFAULT_FROM_EMAIL = EMAIL_FROM
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+ANALYZEBANNER_DIRS = os.path.join(BASE_DIR, 'static/analyzebanner')
+CHANNEL_PPT_DIRS = os.path.join(BASE_DIR, 'static/channel_ppt')
+LOGGING_DIR = os.path.join(BASE_DIR, 'log')
+
+# 翻页设置
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 20,
+    'MARGIN_PAGES_DISPLAYED': 2,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
+
+# log日志配置
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s'
+        },
+        'simple': {
+            'format': '%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d][%(module)s:%(funcName)s] [%(levelname)s]- %(message)s'
+        },
+
+        'standard': {
+            'format': '%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d][%(module)s:%(funcName)s] [%(levelname)s]- %(message)s'
+        }
+
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/classify_email.log'),  # 日志文件的位置
+            'maxBytes': 300 * 1024 * 1024,
+            'backupCount': 10,
+            'formatter': 'verbose'
+        },
+    },
+    'error': {
+        'level': 'ERROR',
+        'class': 'logging.handlers.RotatingFileHandler',
+        'filename': os.path.join(BASE_DIR, 'logs/error_classify_email.log'),
+        'maxBytes': 1024 * 1024 * 5,
+        'backupCount': 5,
+        'formatter': 'standard',
+    },
+    'console': {
+        'level': 'DEBUG',
+        'class': 'logging.StreamHandler',
+        'formatter': 'standard'
+    },
+    'loggers': {
+        'django': {  # 定义了一个名为django的日志器
+            'handlers': ['console', 'file'],
+            'propagate': True,
+        },
+    }
+}

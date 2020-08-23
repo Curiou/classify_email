@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+    
+</head>
+
+<body>
+    <!-- 页头 -->
+    <header class="header">
+        <span id="spnUid">gduconglin@163.com</span>
+        <button>设置</button>
+    </header>
+
+
+    <!-- 标签栏 -->
+    <nav class="nav">
+        <a href="#/home" target="_self" class="active"> 首页</a>
+        <a href="#/mail_list" target="_self"> 通讯录</a>
+        <a href="#/inbox" target="_self"> 收件箱</a>
+    </nav>
+    <!-- 标签栏  END -->
+
+    <!-- 侧边栏 -->
+    <aside class="aside">
+        <div class="aside_top">
+            <a href="#/letter">
+                <i class="i_letter"></i>
+                收信</a>
+            <a href="#/write">
+                <i class="i_write"></i>
+                写信</a>
+        </div>
+        <ul class="aside_ul">
+            <li>
+                <a href="#/inbox">收件箱</a>
+            </li>
+            <li>
+                <a href="#/drafts">草稿箱</a>
+            </li>
+            <li>
+                <a href="#/complete">已发送</a>
+            </li>
+            <li class="er_li">
+                <i class="i"></i>
+                其他2个文件夹
+                <li class="none er_li_show">
+                    <a href="#/delete">已删除</a>
+                </li>
+                <li class="none er_li_show">
+                    <a href="#/lj">垃圾邮件</a>
+                </li>
+            </li>
+            <li>
+                <a href="#/core">邮件中心</a>
+            </li>
+            <li>
+                <a href="#/enclosure">邮件附件</a>
+            </li>
+        </ul>
+
+    </aside>
+    <!-- 侧边栏 END-->
+
+    <!-- 内容部分 -->
+    <article class="article">
+
+        <iframe class="my_content"  id="mainiframe"  src="./home.html"  frameborder="no"    scrolling="no"></iframe>
+                                     
+    </article>
+
+    <!-- 内容部分 END   -->
+    <!-- 外部内容 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script>
+        ; $(function () {
+            var aQuery = ''
+            var link_url=''
+            $(window).bind('hashchange', function () {
+                aQuery = window.location.href.split("index.html");//取得Get参数
+                console.log(aQuery[1]);
+                link_url=aQuery[1].split('/')
+                link_url=link_url[1]
+            
+                $(".nav a").each(function (index, ele) { // nav标签激活当前状态
+                    var url = $(this).attr('href')
+                    if (aQuery[1] === url) {
+                        $(this).addClass('active').siblings().removeClass('active')
+                        return;
+                    }
+                    $("#mainiframe",parent.document.body).attr("src",'./'+link_url+'.html')
+                   
+                });
+
+                $('.aside_ul li a').each(function (index, ele) { // asidelist标签激活当前状态   
+                        var url = $(this).attr('href')
+                        if (aQuery[1] === url) {
+                        $(this).parent().addClass('asideactive').siblings().removeClass('asideactive')
+                        return ;
+                    }
+                });
+
+            });
+
+            var num = 0
+            $('.er_li').click(function () {
+                num++
+                if (num % 2 == 0) {
+                    $('.er_li_show').hide()
+                    $('.i').removeClass('i_click')
+                } else {
+                    $('.er_li_show').show()
+                    $('.i').addClass('i_click')
+                }
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>

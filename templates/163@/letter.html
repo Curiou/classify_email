@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    
+    <title>Document</title>
+    
+    <style>
+        body{
+            padding: 20px;
+        }
+        button {
+          
+            height: 26px;
+            line-height: 26px;
+        }
+        .dropdown{
+            display: inline-block;
+        }
+        input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 18px;
+    margin-right: 10px;
+    position: relative;
+}
+ 
+input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
+ 
+input[type="checkbox"]:checked::before {
+    content: "\2713";
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: 1px solid #7D7D7D;
+    border-radius:4px;
+    color: #7D7D7D;
+    font-size: 20px;
+    font-weight: bold;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class=" page" data-href="#/letter">
+        <div>
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        删除
+                        
+                 </button>
+                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        举报
+                        
+                 </button>
+           <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      标记为
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <li><a href="#">已读</a></li>
+                      <li><a href="#">未读 </a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">办事邮件 </a></li>
+                    
+                    </ul>
+            </div>
+            <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      移动到
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <li><a href="#">已读</a></li>
+                      <li><a href="#">未读 </a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">办事邮件 </a></li>
+                    
+                    </ul>
+            </div>
+            <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      更多
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <li><a href="#">已读</a></li>
+                      <li><a href="#">未读 </a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">办事邮件 </a></li>
+                    
+                    </ul>
+            </div>
+             
+       
+           
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    刷新
+                    
+             </button>
+             
+            <!-- <button>刷新</button> -->
+           <br>
+           <br>
+           <br>
+            <table class="table table-striped">
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>网易暴雪游戏客服团队</td>
+                    <td>暴雪游戏通行证 - 必要操作</td>
+                    <td>2019年5月27日 21:28 (星期一)</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>网易暴雪游戏客服团队</td>
+                    <td>暴雪游戏通行证 - 必要操作</td>
+                    <td>2019年5月27日 21:28 (星期一)</td>
+                </tr>
+                <tr>
+                     <td><input type="checkbox" name="" id=""></td>
+                    <td>网易暴雪游戏客服团队</td>
+                    <td>暴雪游戏通行证 - 必要操作</td>
+                    <td>2019年5月27日 21:28 (星期一)</td>
+                </tr>
+                <tr>
+                     <td><input type="checkbox" name="" id=""></td>
+                    <td>网易暴雪游戏客服团队</td>
+                    <td>暴雪游戏通行证 - 必要操作</td>
+                    <td>2019年5月27日 21:28 (星期一)</td>
+                </tr>
+                <tr>
+                     <td><input type="checkbox" name="" id=""></td>
+                    <td>网易暴雪游戏客服团队</td>
+                    <td>暴雪游戏通行证 - 必要操作</td>
+                    <td>2019年5月27日 21:28 (星期一)</td>
+                </tr>
+                  
+          </table>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script src="./js/scripts/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

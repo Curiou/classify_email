@@ -20,6 +20,7 @@ client = AcsClient(ALI_SMS_APP_KEY, ALI_SMS_SECRET_KEY, 'cn-hangzhou')
 
 
 def send(phone_num: str, code: str):
+    # fixme 根据 阿里短信自己配置
     request = CommonRequest()
     request.set_accept_format('json')
     request.set_domain('dysmsapi.aliyuncs.com')
@@ -31,7 +32,7 @@ def send(phone_num: str, code: str):
     request.add_query_param('PhoneNumbers', phone_num)
     request.add_query_param('SignName', "HOTNEST")
     request.add_query_param('TemplateCode', "SMS_191470428")
-    # FIXME 这个code是自己阿里的设置，必要时要改
+    # FIXME 这个code是自己阿里短信的设置，必要时要改
     request.add_query_param('TemplateParam', {"code": code})
 
     response = client.do_action_with_exception(request)

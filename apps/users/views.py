@@ -201,7 +201,6 @@ class ForgetPasswordViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
 
         # 控制时间
         cache.set(email, code, timeout=3600 * 48)
-        email_title = "HotNest Reset You   Password"
         target_url = req_url + "reset-p/?token=" + code + "&email=" + email
         # res = async_send_mail.delay(PASSWORD_TITLE_EN, email_body, settings.EMAIL_FROM, [email], html_message=email_body)
         email_body = PASSWORD_CONTEXT.format(user=user, url=target_url)

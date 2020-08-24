@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^(?P<version>(v1))/', include(v1.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # rest_framework docs 配置
-    url(r'docs/', include_docs_urls(title="HotNest Docs")),
+    url(r'docs/', include_docs_urls(title="Classify_Email Docs")),
     # 自定已验证，使用redis 缓存 token，保证token唯一
     url(r'^(?P<version>(v1))/token_verify/$', ClassifyEmailTokenVerifyViewSet.as_view(), name="token_verify"),
     url(r'^(?P<version>(v1))/token-refresh/', refresh_jwt_token, name="token_refresh"),

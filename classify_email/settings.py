@@ -54,9 +54,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 下面注册的均为插件注册
     # 注册跨越问题的应用
     'corsheaders',
+    # rest_framework 注册
     'rest_framework',
+    # # xadmin 注册
+    # 'xadmin',
+    # 'crispy_forms',
+    # 'reversion',
+    # 下面注册的均为自定义app注册
     # 用户信息注册
     'users.apps.UsersConfig'
 ]
@@ -217,8 +224,8 @@ REDIS_TOKEN_SUFFIX = "-token"
 FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520
 
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-# TEST_URL = "http://test.hotnest.net"
-# PRO_URL = "http://hotnest.net"
+# TEST_URL = "http://"
+# PRO_URL = "http://"
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 26214400
 

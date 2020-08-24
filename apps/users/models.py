@@ -19,6 +19,7 @@ class VerifyEmailCodeModel(DatetimeOrDel):
     token = models.CharField(max_length=100, verbose_name="验证码", help_text="验证码")
     receiver = models.CharField(max_length=200, verbose_name="接收人", help_text="接收人", default=None)
     send_method = models.IntegerField(choices=((1, "邮箱"), (2, "手机")), default=1)
+    # choices=((1, "找回密码"), (2, "修改邮箱"), (4, "登陆"), (5, "注册"))
     send_type = models.IntegerField(verbose_name="验证码类型", help_text="验证码类型")
     send_time = models.DateTimeField(verbose_name="发送时间", default=datetime.datetime.now)
 
@@ -49,6 +50,7 @@ class UserProfile(AbstractUser, DatetimeOrDel):
         verbose_name_plural = verbose_name
         db_table = "user_info"
         unique_together = ("email", "username",)
+        ordering = ["username", ]
 
     def __str__(self):
         return self.username

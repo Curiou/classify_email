@@ -106,15 +106,15 @@ WSGI_APPLICATION = 'classify_email.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 # 配置 REDIS 缓存
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": REDIS_URL,
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -215,10 +215,10 @@ CORS_ALLOW_METHODS = ('DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT', 'VIEW'
 CORS_ALLOW_HEADERS = ('x-requested-with', 'content-type', 'accept', 'origin', 'authorization', 'x-csrftoken')
 STATIC_URL = '/static/'
 # 媒体文件存储路径
-
 MEDIA_ROOT = os.path.join(BASE_DIR, "files")
 MEDIA_URL = "/files/"
 CELERY_BEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+BROKER_URL = BROKER_URL
 REDIS_TOKEN_SUFFIX = "-token"
 # 上传文件大小，改成20M
 FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520
